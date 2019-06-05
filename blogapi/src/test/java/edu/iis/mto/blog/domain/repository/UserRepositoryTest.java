@@ -16,6 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import edu.iis.mto.blog.domain.model.AccountStatus;
 import edu.iis.mto.blog.domain.model.User;
 
+import static org.hamcrest.core.Is.is;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class UserRepositoryTest {
@@ -60,6 +62,15 @@ public class UserRepositoryTest {
         User persistedUser = repository.save(user);
 
         Assert.assertThat(persistedUser.getId(), Matchers.notNullValue());
+    }
+
+    @Test
+    public void shouldFindUserByFirstName() {
+
+        repository.save(user);
+        List<User> users = repository.findByFirstNameContainingOrLastNameContainingOrEmailContainingAllIgnoreCase("Jan", "lastName", "email");
+
+        Assert.assertThat(users.contains(user), is(true));
     }
 
 }
