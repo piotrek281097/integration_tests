@@ -91,14 +91,9 @@ public class BlogManagerTest {
 
     @Test
     public void addingLikePostShouldBePossibleOnlyByUserWithStatusConfirmed() {
-        blogService.addLikeToPost(userConfirmed.getId(), blogPost.getId());
-        ArgumentCaptor<LikePost> likePostParam = ArgumentCaptor.forClass(LikePost.class);
-        Mockito.verify(likePostRepository).save(likePostParam.capture());
-        LikePost likePost = likePostParam.getValue();
+        boolean isAddedLikePost = blogService.addLikeToPost(userConfirmed.getId(), blogPost.getId());
 
-        Assert.assertThat(likePost.getUser(), Matchers.sameInstance(userConfirmed));
-        Assert.assertThat(likePost.getPost(), Matchers.sameInstance(blogPost));
-
+        Assert.assertTrue(isAddedLikePost);
     }
 
     @Test(expected = DomainError.class)
