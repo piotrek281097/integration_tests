@@ -66,6 +66,12 @@ public class BlogApiTest {
                                       .accept(MediaType.APPLICATION_JSON_UTF8).content(content)).andExpect(status().isConflict());
     }
 
+    @Test
+    public void gettingUserDataWhenUserIsNotFoundShouldResponseWithStatusNotFound() throws Exception {
+        Mockito.when(finder.getUserData(1L)).thenThrow(new DomainError(DomainError.USER_NOT_FOUND));
+        mvc.perform(get("/blog/user/{id}", 1)).andExpect(status().isNotFound());
+    }
+
     private String writeJson(Object obj) throws JsonProcessingException {
         return new ObjectMapper().writer().writeValueAsString(obj);
     }
