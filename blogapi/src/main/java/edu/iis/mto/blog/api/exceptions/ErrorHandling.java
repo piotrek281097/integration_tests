@@ -28,7 +28,7 @@ public class ErrorHandling {
     @ExceptionHandler(DomainError.class)
     public void domainError(DomainError exc, HttpServletResponse response) throws IOException {
         LOGGER.error(exc.getMessage());
-        if (exc.getMessage().equals(DomainError.USER_NOT_CONFIRMED)) {
+        if (exc.getMessage().equals(DomainError.USER_NOT_CONFIRMED) || exc.getMessage().equals(DomainError.SELF_LIKE)) {
             response.sendError(HttpStatus.UNAUTHORIZED.value(), exc.getMessage());
         } else {
             response.sendError(HttpStatus.NOT_FOUND.value(), exc.getMessage());
