@@ -29,7 +29,7 @@ public class CreatePostTest extends FunctionalTests{
     }
 
     @Test
-    public void postBlogPostByNewUserReturns201Code() {
+    public void postBlogPostByConfirmedUserReturns201Code() {
         String userId = "1";
         POST_API = POST_API_FIRST_PART + userId + POST_API_LAST_PART;
         JSONObject jsonObj = new JSONObject().put("entry", "entryBlogPost");
